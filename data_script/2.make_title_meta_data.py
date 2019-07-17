@@ -26,6 +26,6 @@ if __name__ == "__main__":
             'keyword_list': json_line.get('keyword_list', [])
         }
 
-        title_meta_data[json_line['user_id']] = title_meta_value_format
+        title_meta_data[json_line['id']] = title_meta_value_format
 
     _save_to_text(title_meta_data, SAVE_PATH)
