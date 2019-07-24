@@ -4,17 +4,22 @@ from six import iteritems
 import time
 import json
 
+TRAIN_PATH = r'../tmp/train'
+DEV_PATH = r'../tmp/dev'
+METADATA_PATH = r'../res/metadata.json'
+USER_PATH = r'../res/users.json'
+
 
 def get_data():
     all_dict = defaultdict(list)
-    for line in open(r'../train'):
+    for line in open(TRAIN_PATH):
         line = line.replace('\n', '')
         line = line.split(' ')
         user = line[0]
         items = line[1:]
         all_dict[user] += items
 
-    for line in open(r'../dev'):
+    for line in open(DEV_PATH):
         line = line.replace('\n', '')
         line = line.split(' ')
         user = line[0]
@@ -50,7 +55,7 @@ def get_metadata():
     now_time = time.time() * 1000
 
     meta_read_dict = defaultdict()
-    for line in open(r'../metadata.json'):
+    for line in open(METADATA_PATH):
         try:
             line = json.loads(line)
             reads = line.get('keyword_list', [])
@@ -74,7 +79,7 @@ def get_follow():
     follow_dict = defaultdict()
     follow_dict.default_factory = follow_dict.__len__
 
-    for line in open(r'../users.json'):
+    for line in open(USER_PATH):
         line = json.loads(line)
         following_list = line.get('following_list', [])
         for following in following_list:
@@ -83,7 +88,7 @@ def get_follow():
     follow_len = len(follow_dict)
     follow_user = defaultdict()
 
-    for line in open(r'../users.json'):
+    for line in open(USER_PATH):
         line = json.loads(line)
         user = line.get('id')
         following_list = line.get('following_list', [])
